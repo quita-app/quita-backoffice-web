@@ -18,6 +18,9 @@ export default defineConfig(({ mode }) => ({
     },
   },
   preview: { port: 4302, host: 'localhost' },
+  // In library mode Vite does NOT replace process.env.NODE_ENV, and React reads it.
+  // Without this, the browser throws "ReferenceError: process is not defined".
+  define: { 'process.env.NODE_ENV': JSON.stringify(mode) },
   resolve: {
     tsconfigPaths: true,
   },
