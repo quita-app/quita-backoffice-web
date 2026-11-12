@@ -35,7 +35,8 @@ Versões fixadas: Nx 24.0.x · Angular 22.2.x · Native Federation 22.2.x · Rea
 
 | Para | Comando |
 | --- | --- |
-| Servir o shell com os remotes | `npx nx serve shell` + `npx nx serve operations` + `npx nx build analytics && npx nx preview analytics` (o shell carrega o Analytics de `localhost:4302`) |
+| Subir tudo de uma vez (shell, operations e analytics) | `npm run dev` (a API sobe à parte, no `quita-backend-api`) |
+| Servir o shell com os remotes, um por um | `npx nx serve shell` + `npx nx serve operations` + `npx nx build analytics && npx nx preview analytics` (o shell carrega o Analytics de `localhost:4302`) |
 | Servir só o Analytics (página isolada) | `npx nx serve analytics` (porta 4202) |
 | Testes de um projeto | `npx nx test <project>` |
 | Lint (inclui as fronteiras entre libs) | `npx nx lint <project>` |

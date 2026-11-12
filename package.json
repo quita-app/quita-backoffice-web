@@ -2,7 +2,9 @@
   "name": "@quita-backoffice-web/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev": "nx run-many -t serve preview -p shell operations analytics --parallel=5"
+  },
   "private": true,
   "devDependencies": {
     "@analogjs/vite-plugin-angular": "~2.7.3",
