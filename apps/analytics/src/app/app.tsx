@@ -1,12 +1,10 @@
-// Uncomment this line to use CSS modules
-// import styles from './app.module.css';
-import NxWelcome from './nx-welcome';
-
 export function App() {
   return (
-    <div>
-      <NxWelcome title="analytics" />
-    </div>
+    <main className="demo-card">
+      <h1>Analytics</h1>
+      <p>Tokens loaded from the design-tokens lib.</p>
+      <button type="button">Primary action</button>
+    </main>
   );
 }
 

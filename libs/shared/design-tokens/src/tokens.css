@@ -1,0 +1,105 @@
+/*
+ * Quita design tokens: the single source for Angular, React and Next.js.
+ * Values and names come from quita-docs/design/DESIGN.md (shadcn/Spartan naming).
+ * Light theme on :root, dark theme on .dark (dark mode itself ships later).
+ * Custom properties inherit through Shadow DOM, which is how they reach <quita-analytics>.
+ */
+:root {
+  /* Base surfaces and text */
+  --background: #dce7f5; /* the "field": light blue behind the cards */
+  --foreground: #13203a; /* "ink": text and main actions */
+  --card: #ffffff;
+  --card-foreground: #13203a;
+  --popover: #ffffff;
+  --popover-foreground: #13203a;
+  --primary: #13203a;
+  --primary-foreground: #ffffff;
+  --secondary: #e8f0ff;
+  --secondary-foreground: #13203a;
+  --muted: #e9f0f9;
+  --muted-foreground: #576478;
+  --accent: #e8f0ff;
+  --accent-foreground: #13203a;
+  --border: #dce3ee;
+  --input: #707d8f;
+  --ring: #4b72c0;
+  --destructive: #ab413e;
+  --destructive-foreground: #ffffff;
+
+  /* Quita-specific */
+  --success: #186e4e;
+  --warning: #9d621e;
+  --info: #4b72c0;
+  --signature: #8db0f7; /* one per screen, surface only (never text on white) */
+  --signature-foreground: #13203a;
+  --celebrate: #91e6be; /* mint: only for settled debts and closed agreements */
+  --celebrate-foreground: #13203a;
+  --aging-1: #a5bfec; /* up to 30 days */
+  --aging-2: #8aa5d6; /* 31 to 90 */
+  --aging-3: #6f8cc1; /* 91 to 180 */
+  --aging-4: #5371a9; /* 181 to 360 */
+  --aging-5: #34538f; /* over 360 */
+  --chart-1: #13203a;
+  --chart-2: #4b72c0;
+  --chart-3: #258b64;
+  --chart-4: #be7c1c;
+  --chart-5: #7b8799;
+
+  /* Typography */
+  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+
+  /* Radii: containers are rounder than what they contain */
+  --radius-pill: 9999px;
+  --radius-container: 36px;
+  --radius-card: 24px;
+  --radius-field: 14px;
+  --radius-inner: 10px;
+}
+
+.dark {
+  --background: #0f1a2c;
+  --foreground: #eef3fa;
+  --card: #17233a;
+  --card-foreground: #eef3fa;
+  --popover: #1e2c46;
+  --popover-foreground: #eef3fa;
+  --primary: #eef3fa;
+  --primary-foreground: #13203a;
+  --secondary: #22345a;
+  --secondary-foreground: #eef3fa;
+  --muted: #1a2740;
+  --muted-foreground: #9aa8bd;
+  --accent: #22345a;
+  --accent-foreground: #eef3fa;
+  --border: #26354f;
+  --input: #647289;
+  --ring: #8db0f7;
+  --destructive: #eb827b;
+  --destructive-foreground: #13203a;
+  --success: #65cfa1;
+  --warning: #eab26b;
+  --info: #afcbff;
+  --signature: #8db0f7;
+  --signature-foreground: #13203a;
+  --celebrate: #7cdbb0;
+  --celebrate-foreground: #13203a;
+  --aging-1: #506386;
+  --aging-2: #647ba3;
+  --aging-3: #7b96c5;
+  --aging-4: #93b2e8;
+  --aging-5: #acceff;
+  --chart-1: #eef3fa;
+  --chart-2: #8db0f7;
+  --chart-3: #65cfa1;
+  --chart-4: #edb161;
+  --chart-5: #a7b2c2;
+}
+
+/* Base: every app starts on the field, in Geist, with tabular numbers */
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}

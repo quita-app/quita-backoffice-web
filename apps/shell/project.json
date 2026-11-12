@@ -1,5 +1,6 @@
 {
   "name": "shell",
+  "implicitDependencies": ["shared-design-tokens"],
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "quita",
@@ -20,7 +21,7 @@
             "input": "apps/shell/public"
           }
         ],
-        "styles": ["apps/shell/src/styles.css"]
+        "styles": ["libs/shared/design-tokens/src/tokens.css", "apps/shell/src/styles.css"]
       },
       "configurations": {
         "production": {

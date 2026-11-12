@@ -1,1 +1,1 @@
-export * from './lib/shared-design-tokens';
+export {};

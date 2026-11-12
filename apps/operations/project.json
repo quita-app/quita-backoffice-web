@@ -1,5 +1,6 @@
 {
   "name": "operations",
+  "implicitDependencies": ["shared-design-tokens"],
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "quita",
@@ -20,7 +21,7 @@
             "input": "apps/operations/public"
           }
         ],
-        "styles": ["apps/operations/src/styles.css"]
+        "styles": ["libs/shared/design-tokens/src/tokens.css", "apps/operations/src/styles.css"]
       },
       "configurations": {
         "production": {

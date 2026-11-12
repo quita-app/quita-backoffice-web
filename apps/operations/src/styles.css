@@ -1,1 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+h1 {
+  font-weight: 600;
+  letter-spacing: -0.035em; /* H1 do DESIGN.md: tracking −3,5% */
+}
