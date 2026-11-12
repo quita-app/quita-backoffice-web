@@ -105,7 +105,7 @@ if (fancy) {
 const SPINNER = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
 const WIDTH = Math.max(...SERVICES.map((s) => s.name.length), API.name.length);
 const header = (suffix = '') =>
-  `  ${paint(SKY, 'quita', { bold: true })}  ${paint(MUTED, `backoffice${suffix}`)}`;
+  `  ${paint(SKY, 'quita', { bold: true })} ${paint(MUTED, `backoffice${suffix}`)}`;
 const rule = `  ${paint(MUTED, '─'.repeat(40))}`;
 
 let drawn = 0;
