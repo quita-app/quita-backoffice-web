@@ -5,7 +5,7 @@ description: Convenções de Angular do quita-backoffice-web (componentes, signa
 
 # Regras da stack: Angular
 
-Valem para `apps/shell`, `apps/operations` e `libs/angular/*`, `libs/operations/*`. A origem é o LLD do backoffice (`../quita-docs/docs/lld/backoffice.md`); quando divergir, vale o LLD. Use só APIs atuais; o que é legado aparece na última seção.
+Valem para `apps/shell`, `apps/operations` e `libs/shared/angular/*`, `libs/operations/*`. A origem é o LLD do backoffice (`../quita-docs/docs/lld/backoffice.md`); quando divergir, vale o LLD. Use só APIs atuais; o que é legado aparece na última seção.
 
 ## Componentes e templates
 
@@ -43,7 +43,7 @@ Valem para `apps/shell`, `apps/operations` e `libs/angular/*`, `libs/operations/
 
 ## HTTP
 
-- Chamadas em `libs/angular/data-access`, devolvendo `Observable` com os tipos de `libs/shared/api-types`. Componente não conhece URL.
+- Chamadas em `libs/operations/data-access` (só o Operações usa) ou `libs/shared/angular/data-access` (o shell também usa), devolvendo `Observable` com os tipos de `libs/shared/api-types`. Componente não conhece URL.
 - Interceptors funcionais na ordem do LLD: `requestId`, `auth`, `serverWaking`, `problemDetails`.
 - Parâmetros com `HttpParams`, nunca concatenados na URL.
 - Erro tratado pelo `code`; `Idempotency-Key` gerada uma vez por intenção nas criações.

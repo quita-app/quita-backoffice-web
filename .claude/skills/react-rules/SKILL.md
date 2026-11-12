@@ -1,11 +1,11 @@
 ---
 name: react-rules
-description: Convenções de React do quita-backoffice-web (Web Component do Analytics, hooks, TanStack Query, estado, acessibilidade, testes). Use ao escrever, revisar ou discutir código React de apps/analytics ou de libs/react/*.
+description: Convenções de React do quita-backoffice-web (Web Component do Analytics, hooks, TanStack Query, estado, acessibilidade, testes). Use ao escrever, revisar ou discutir código React de apps/analytics ou de libs/analytics/*.
 ---
 
 # Regras da stack: React (Analytics)
 
-Valem para `apps/analytics` e `libs/react/*`. A origem é o LLD do backoffice (`../quita-docs/docs/lld/backoffice.md`, seções 4 e 8); quando divergir, vale o LLD.
+Valem para `apps/analytics` e `libs/analytics/*`. A origem é o LLD do backoffice (`../quita-docs/docs/lld/backoffice.md`, seções 4 e 8); quando divergir, vale o LLD.
 
 ## Fronteira com o shell
 
@@ -14,7 +14,7 @@ Valem para `apps/analytics` e `libs/react/*`. A origem é o LLD do backoffice (`
 - A árvore lê as propriedades com `useSyncExternalStore`, sem cópia em estado local.
 - O Analytics **não** guarda token, não mexe no histórico do navegador e não desenha menu nem barra. Os filtros aplicados pertencem à URL do shell.
 - Estilos dentro do Shadow DOM, com os tokens compartilhados (CSS custom properties). Portal (`createPortal`) aponta para um nó dentro do shadow root, nunca para o `document.body`.
-- Nada de `libs/angular/*` é importado aqui (o lint barra).
+- Nada de `libs/shared/angular/*` nem de `libs/operations/*` é importado aqui (o lint barra pelas tags `framework:` e `scope:`).
 
 ## Componentes e estado
 

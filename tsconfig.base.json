@@ -14,7 +14,23 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "strict": false,
-    "paths": {}
+    "paths": {
+      "@quita/shared-api-types": ["./libs/shared/api-types/src/index.ts"],
+      "@quita/shared-design-tokens": ["./libs/shared/design-tokens/src/index.ts"],
+      "@quita/shared-util": ["./libs/shared/util/src/index.ts"],
+      "@quita/shared-angular-ui": ["./libs/shared/angular/ui/src/index.ts"],
+      "@quita/shared-angular-data-access": ["./libs/shared/angular/data-access/src/index.ts"],
+      "@quita/shared-angular-session": ["./libs/shared/angular/session/src/index.ts"],
+      "@quita/shared-angular-realtime": ["./libs/shared/angular/realtime/src/index.ts"],
+      "@quita/operations-feature-queue": ["./libs/operations/feature-queue/src/index.ts"],
+      "@quita/operations-feature-imports": ["./libs/operations/feature-imports/src/index.ts"],
+      "@quita/operations-feature-policies": ["./libs/operations/feature-policies/src/index.ts"],
+      "@quita/operations-feature-payments": ["./libs/operations/feature-payments/src/index.ts"],
+      "@quita/operations-feature-admin": ["./libs/operations/feature-admin/src/index.ts"],
+      "@quita/operations-data-access": ["./libs/operations/data-access/src/index.ts"],
+      "@quita/analytics-feature-dashboard": ["./libs/analytics/feature-dashboard/src/index.ts"],
+      "@quita/analytics-ui": ["./libs/analytics/ui/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

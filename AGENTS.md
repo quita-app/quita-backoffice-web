@@ -53,24 +53,31 @@ A API local precisa estar rodando (`../quita-backend-api`); o servidor de desenv
 ```
 apps/      shell · operations · analytics · shell-e2e
 libs/
-  shared/     api-types · design-tokens · util          (TypeScript puro, sem framework)
-  angular/    ui · data-access · session · realtime
-  operations/ feature-queue · feature-imports · feature-policies · feature-payments · feature-admin
-  react/      ui
+  shared/         api-types · design-tokens · util          (TypeScript puro, usado por todos)
+    angular/      ui · data-access · session · realtime     (shell e Operações; singleton na federação)
+  operations/     feature-queue · feature-imports · feature-policies · feature-payments · feature-admin · data-access
+  analytics/      feature-dashboard · ui
 ```
 
-**Fronteiras** (tags do Nx, verificadas no lint):
+**Onde entra código novo:** a primeira pasta de `libs/` é o domínio. Só um app usa? `libs/<app>/`. Dois ou mais? `libs/shared/` (em `shared/angular/` se for Angular). Apps são finos: entrada, configuração e composição. Projeto = caminho com hífens (`operations-feature-queue`); apelido = `@quita/<projeto>`.
+
+**Fronteiras** (tags do Nx, verificadas no lint; o import precisa passar nas três):
 
 | Tag | Pode depender de |
 | --- | --- |
-| `type:app` | qualquer lib |
+| `type:app` | `type:feature`, `type:ui`, `type:data-access`, `type:util` |
 | `type:feature` | `type:ui`, `type:data-access`, `type:util` |
 | `type:data-access`, `type:ui` | `type:util` |
-| `type:util` | nada |
-| `scope:angular` | `scope:angular`, `scope:shared` |
-| `scope:react` | `scope:react`, `scope:shared` |
+| `type:util`, `type:e2e` | nada |
+| `scope:shell` | `scope:shared` |
+| `scope:operations` | `scope:operations`, `scope:shared` |
+| `scope:analytics` | `scope:analytics`, `scope:shared` |
+| `scope:shared` | `scope:shared` |
+| `framework:angular` | `framework:angular`, `framework:none` |
+| `framework:react` | `framework:react`, `framework:none` |
+| `framework:none` | `framework:none` |
 
-Todo projeto novo recebe as duas tags (`type:*` e `scope:*`). Uma lib Angular nunca é importada pelo React, e vice-versa.
+Todo projeto novo recebe as três tags (`type:*`, `scope:*`, `framework:*`). Uma lib Angular nunca é importada pelo React, e vice-versa.
 
 ## Convenções
 

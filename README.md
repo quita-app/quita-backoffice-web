@@ -95,13 +95,13 @@ apps/
   shell/          moldura e composição          operations/   remote Angular
   analytics/      Web Component React           shell-e2e/    ponta a ponta (Playwright)
 libs/
-  shared/         api-types · design-tokens · util      TypeScript puro, sem framework
-  angular/        ui · data-access · session · realtime
-  operations/     feature-queue · feature-imports · feature-policies · feature-payments · feature-admin
-  react/          ui
+  shared/         api-types · design-tokens · util      TypeScript puro, usado por todos
+    angular/      ui · data-access · session · realtime shell e Operações
+  operations/     feature-queue · feature-imports · feature-policies · feature-payments · feature-admin · data-access
+  analytics/      feature-dashboard · ui
 ```
 
-**As fronteiras são verificadas pelo lint.** Cada projeto tem duas tags, o tipo (`feature`, `ui`, `data-access`, `util`) e o escopo (`angular`, `react`, `shared`), e um import que o desenho proíbe (Angular importando React, UI importando HTTP) quebra o `nx lint`.
+**As libs são agrupadas por domínio, e as fronteiras são verificadas pelo lint.** Cada projeto tem três tags: a camada (`feature`, `ui`, `data-access`, `util`), o domínio (`shell`, `operations`, `analytics`, `shared`) e o framework (`angular`, `react`, `none`). Um import que o desenho proíbe (Angular importando React, Operações importando o Painel, UI importando HTTP) quebra o `nx lint`.
 
 ## Decisões que moldam este repositório
 
