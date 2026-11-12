@@ -30,7 +30,13 @@ const API = { label: 'API', url: 'http://localhost:8080', probe: 'http://localho
 const root = fileURLToPath(new URL('..', import.meta.url));
 const nxPackage = createRequire(import.meta.url)('nx/package.json');
 const nxBin = join(dirname(createRequire(import.meta.url).resolve('nx/package.json')), nxPackage.bin.nx);
-const runNx = (args) => spawn(process.execPath, [nxBin, ...args], { stdio: 'inherit', cwd: root });
+// NX_TUI=false: Nx's full-screen terminal UI would cover the URL box we print below.
+const runNx = (args) =>
+  spawn(process.execPath, [nxBin, ...args], {
+    stdio: 'inherit',
+    cwd: root,
+    env: { ...process.env, NX_TUI: 'false' },
+  });
 
 // Two Nx processes start in parallel: the Angular dev servers, and the analytics preview
 // (which builds the web component first; Nx caches that build for the next run).
