@@ -1,0 +1,4 @@
+{
+  "operations": "http://localhost:4201/remoteEntry.json",
+  "analytics": "http://localhost:4302/quita-analytics.js"
+}
