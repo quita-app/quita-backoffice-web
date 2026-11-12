@@ -1,98 +1,127 @@
-# QuitaBackofficeWeb
+<p align="center">
+  <img src=".github/assets/banner.png" alt="Quita · Backoffice: o balcão da Credora" width="100%" />
+</p>
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+<p align="center">
+  <strong>Capítulo 3 · O balcão da Credora</strong><br />
+  O sistema interno em que o Gestor configura e acompanha, e o Operador trabalha a Fila.
+</p>
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+<p align="center">
+  <img alt="Nx 24" src="https://img.shields.io/badge/Nx-24-13203A" />
+  <img alt="Angular 22" src="https://img.shields.io/badge/Angular-22-13203A" />
+  <img alt="React 19" src="https://img.shields.io/badge/React-19-13203A" />
+  <img alt="Native Federation" src="https://img.shields.io/badge/Native%20Federation-22-13203A" />
+  <img alt="Status: walking skeleton" src="https://img.shields.io/badge/status-walking%20skeleton-8DB0F7" />
+</p>
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+---
 
-## Run tasks
+## O Quita em uma frase
 
-To run tasks with Nx use:
+Uma plataforma B2B de cobrança e renegociação: a **Credora** (uma escola, uma clínica) sobe a lista de quem deve e define até onde aceita negociar; o **Devedor** resolve sozinho pelo celular; o **Operador** cuida só das exceções; o **Gestor** vê quanto recuperou.
 
-```sh
-npx nx <target> <project-name>
+## Onde este capítulo entra na história
+
+Antes de a Ana receber o link no celular, alguém na escola fez três coisas aqui: o **Gestor** importou a Carteira com 3.000 Devedores, definiu a Política (até 25% de desconto e 10 parcelas para quem está entre 91 e 180 dias de atraso) e publicou. Quando a Ana não resolve sozinha, a ficha dela aparece na **Fila** de um **Operador**, que liga, registra a Tratativa e negocia dentro da mesma Política. No fim do mês, o Gestor abre o **Painel** e vê quanto recuperou.
+
+| Capítulo | Repositório | Para quem | O que resolve |
+| --- | --- | --- | --- |
+| 1 · O porquê | [`quita-docs`](https://github.com/quita-app/quita-docs) | Quem quer entender o produto | Problema, regras de negócio, arquitetura e decisões |
+| 2 · As regras | [`quita-backend-api`](https://github.com/quita-app/quita-backend-api) | Todos, por trás das telas | Regras, dados e integrações |
+| **3 · O balcão da Credora** 📍 | **`quita-backoffice-web`** | Gestor e Operador | Importar, configurar a Política, trabalhar a Fila, acompanhar o Painel (você está aqui) |
+| 4 · A porta da Ana | [`quita-debtor-portal-web`](https://github.com/quita-app/quita-debtor-portal-web) | Devedor | Ver a Dívida, simular, fechar o Acordo, pagar por Pix |
+
+## O que este repositório faz
+
+Três aplicações que o usuário enxerga como uma tela só (**micro front-ends**), publicadas separadamente:
+
+| App | O que é | Tecnologia | Porta local |
+| --- | --- | --- | --- |
+| `shell` | A moldura: login, sessão, menu e quem carrega as outras áreas | Angular | 4200 |
+| `operations` | O dia a dia: Fila, ficha do Devedor, importação, Política, pagamentos | Angular, por Native Federation | 4201 |
+| `analytics` | O Painel do Gestor | React, como o Web Component `<quita-analytics>` | 4202 (sozinho) / 4302 (no shell) |
+
+## Como funciona
+
+```mermaid
+flowchart LR
+  U["Navegador<br/>Gestor / Operador"] --> S["shell<br/>(Angular)"]
+  S -- "lê na inicialização" --> M["federation.manifest.json"]
+  S -- "ao entrar em /operations<br/>loadRemoteModule" --> O["operations<br/>(Angular remoto)"]
+  S -- "ao entrar em /analytics<br/>carrega o script" --> A["&lt;quita-analytics&gt;<br/>(React, Shadow DOM)"]
+  S -- "/api/* (mesmo domínio)" --> P["proxy"] --> API["quita-backend-api"]
 ```
 
-For example:
+- **Nada é baixado antes da hora:** cada área só chega quando o usuário entra nela.
+- **Uma área fora do ar não derruba a moldura:** o miolo mostra "Não foi possível carregar esta área", com **Tentar de novo**.
+- **Angular e RxJS são baixados uma vez** e compartilhados entre o shell e o Operações.
+- **O React fica isolado** atrás da tag `<quita-analytics>`: propriedades para dentro, eventos para fora, estilo isolado por Shadow DOM.
 
-```sh
-npx nx build myproject
+## Comece em 5 minutos
+
+**Você precisa de:** Node 24 e a [API](https://github.com/quita-app/quita-backend-api) rodando em `localhost:8080`.
+
+```bash
+git clone https://github.com/quita-app/quita-backoffice-web.git
+cd quita-backoffice-web
+npm ci
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+Um terminal por app:
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-To install a new plugin you can use the `nx add` command. Here's an example of adding the React plugin:
-
-```sh
-npx nx add @nx/react
+```bash
+npx nx serve operations                               # http://localhost:4201
+npx nx build analytics && npx nx preview analytics    # http://localhost:4302/quita-analytics.js
+npx nx serve shell                                    # http://localhost:4200  ← abra este
 ```
 
-Use the plugin's generator to create new projects. For example, to create a new React app or library:
+Em `localhost:4200`, clique em **Operações** e em **Painel**: os dois mostram "API: no ar".
 
-```sh
-# Generate an app
-npx nx g @nx/react:app demo
+## Comandos do dia a dia
 
-# Generate a library
-npx nx g @nx/react:lib some-lib
+| Para | Comando |
+| --- | --- |
+| Servir um app | `npx nx serve <shell \| operations \| analytics>` |
+| Testes de um projeto | `npx nx test <projeto>` |
+| Lint (inclui as fronteiras entre libs) | `npx nx lint <projeto>` |
+| Só o que a sua branch afetou | `npx nx affected -t lint test build` |
+| Ver o grafo de projetos | `npx nx graph` |
+
+## Estrutura
+
+```
+apps/
+  shell/          moldura e composição          operations/   remote Angular
+  analytics/      Web Component React           shell-e2e/    ponta a ponta (Playwright)
+libs/
+  shared/         api-types · design-tokens · util      TypeScript puro, sem framework
+  angular/        ui · data-access · session · realtime
+  operations/     feature-queue · feature-imports · feature-policies · feature-payments · feature-admin
+  react/          ui
 ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+**As fronteiras são verificadas pelo lint.** Cada projeto tem duas tags, o tipo (`feature`, `ui`, `data-access`, `util`) e o escopo (`angular`, `react`, `shared`), e um import que o desenho proíbe (Angular importando React, UI importando HTTP) quebra o `nx lint`.
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Decisões que moldam este repositório
 
-## Set up CI!
+| Decisão | Por quê | ADR |
+| --- | --- | --- |
+| Monorepo para o backoffice, repos separados para portal e API | Um produto que muda junto; os outros têm público e ciclo próprios | [0001](https://github.com/quita-app/quita-docs/blob/main/docs/adr/0001-repository-structure.md) |
+| Micro front-ends por domínio | Áreas publicadas sozinhas, numa moldura só | [0002](https://github.com/quita-app/quita-docs/blob/main/docs/adr/0002-micro-frontend-composition.md) |
+| Native Federation + Web Component para o React | Padrões do navegador, builder esbuild do Angular, React sem atravessar a fronteira | [0012](https://github.com/quita-app/quita-docs/blob/main/docs/adr/0012-native-federation-and-web-component.md) |
+| Tipos gerados, chamadas escritas à mão | O contrato vem do `openapi.json` da API | [0011](https://github.com/quita-app/quita-docs/blob/main/docs/adr/0011-generated-types-handwritten-calls.md) |
 
-### Step 1
+## Status
 
-To connect to Nx Cloud, run the following command:
+- [ ] **F01 · Walking skeleton:** workspace, fronteiras, tokens, federação, Web Component, deploy na Vercel.
+- [ ] **F02 · Acesso ao backoffice:** login, sessão, moldura final.
+- [ ] **F03 em diante:** Credoras, importação, Busca, Política, Fila, Painel…
 
-```sh
-npx nx connect
-```
+## Leia também
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+- [Glossário](https://github.com/quita-app/quita-docs/blob/main/GLOSSARY.md): o vocabulário do domínio.
+- [LLD do backoffice](https://github.com/quita-app/quita-docs/blob/main/docs/lld/backoffice.md): estrutura, rotas, estado e comunicação entre shell e remotes.
+- [Design system](https://github.com/quita-app/quita-docs/blob/main/design/DESIGN.md): cores, tipografia e componentes.
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
-```
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+<p align="center"><sub>Quita · cobrança que baixa a tensão</sub></p>
