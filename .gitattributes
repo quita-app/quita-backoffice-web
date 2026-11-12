@@ -1,0 +1,9 @@
+# Todo arquivo de texto entra no repositório com LF, em qualquer sistema
+* text=auto eol=lf
+
+# Binários: nunca converter
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
