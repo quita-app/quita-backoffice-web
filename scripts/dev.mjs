@@ -54,6 +54,54 @@ const paint = (hex, text, { bold = false, underline = false } = {}) => {
   return `\x1b[${style}38;2;${n >> 16};${(n >> 8) & 255};${n & 255}m${text}\x1b[0m`;
 };
 
+// The Quita symbol (design/brand/simbolo): a "q" whose stem ends in a check.
+// Drawn from the same geometry as the SVG (viewBox 4.5 1.5 94 94, stroke 13), then turned into
+// half-block characters: two pixel rows per text row, so pixels stay square.
+const SYMBOL_PIXELS = 28;
+const STROKE_RADIUS = 6.5;
+
+const distanceToSegment = (x, y, ax, ay, bx, by) => {
+  const dx = bx - ax;
+  const dy = by - ay;
+  const t = Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / (dx * dx + dy * dy)));
+  return Math.hypot(x - (ax + t * dx), y - (ay + t * dy));
+};
+
+const symbolPixel = (col, row) => {
+  const x = 4.5 + ((col + 0.5) * 94) / SYMBOL_PIXELS;
+  const y = 1.5 + ((row + 0.5) * 94) / SYMBOL_PIXELS;
+  const bowl = Math.abs(Math.hypot(x - 42, y - 42) - 24) <= STROKE_RADIUS;
+  const stem = distanceToSegment(x, y, 66, 42, 66, 75) <= STROKE_RADIUS;
+  const check = distanceToSegment(x, y, 66, 75, 85, 57) <= STROKE_RADIUS;
+  if (bowl || stem) return SKY;
+  return check ? MINT : null; // the check is the mint accent
+};
+
+const rgbCode = (hex, background = false) => {
+  const n = parseInt(hex.slice(1), 16);
+  return `\x1b[${background ? 48 : 38};2;${n >> 16};${(n >> 8) & 255};${n & 255}m`;
+};
+
+const symbolCell = (top, bottom) => {
+  if (!top && !bottom) return ' ';
+  if (top === bottom) return `${rgbCode(top)}█\x1b[0m`;
+  if (!bottom) return `${rgbCode(top)}▀\x1b[0m`;
+  if (!top) return `${rgbCode(bottom)}▄\x1b[0m`;
+  return `${rgbCode(top)}${rgbCode(bottom, true)}▀\x1b[0m`;
+};
+
+const SYMBOL = [];
+if (fancy) {
+  for (let row = 0; row < SYMBOL_PIXELS; row += 2) {
+    let line = '';
+    for (let col = 0; col < SYMBOL_PIXELS; col++) {
+      line += symbolCell(symbolPixel(col, row), symbolPixel(col, row + 1));
+    }
+    if (line.trim()) SYMBOL.push(`  ${line}`); // the symbol does not fill the whole viewBox
+  }
+  SYMBOL.push('');
+}
+
 const SPINNER = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
 const WIDTH = Math.max(...SERVICES.map((s) => s.name.length), API.name.length);
 const header = (suffix = '') =>
@@ -168,7 +216,7 @@ const printReady = async (startedAt) => {
   const seconds = Math.round((Date.now() - startedAt) / 1000);
   const link = (url, strong = false) => paint(SKY, url, { bold: strong, underline: true });
 
-  console.log(`\n${header(`  ·  pronto em ${seconds}s`)}\n${rule}\n`);
+  console.log(`\n${SYMBOL.join('\n')}${SYMBOL.length ? '\n' : ''}${header(`  ·  pronto em ${seconds}s`)}\n${rule}\n`);
   console.log(`  ${paint(MINT, '➜', { bold: true })} ${paint(TEXT, 'Abra', { bold: true })}  ${link(SERVICES[0].url, true)}\n`);
   for (const service of SERVICES.slice(1)) {
     console.log(`    ${paint(TEXT, service.name.padEnd(WIDTH))}  ${link(service.url)}  ${paint(MUTED, service.note)}`);
@@ -189,6 +237,7 @@ if (fancy) {
   spinnerTimer = setInterval(() => {
     const frame = SPINNER[Math.floor(Date.now() / 80) % SPINNER.length];
     draw([
+      ...SYMBOL,
       header(),
       rule,
       ...SERVICES.map((service, index) =>
