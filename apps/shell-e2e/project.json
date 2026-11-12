@@ -6,5 +6,5 @@
   "implicitDependencies": ["shell"],
   "// targets": "to see all targets run: nx show project shell-e2e --web",
   "targets": {},
-  "tags": ["type:e2e", "scope:angular"]
+  "tags": ["type:e2e", "scope:shell", "framework:none"]
 }

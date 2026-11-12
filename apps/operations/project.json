@@ -1,14 +1,74 @@
 {
   "name": "operations",
+  "implicitDependencies": [
+    "shared-design-tokens"
+  ],
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "quita",
   "sourceRoot": "apps/operations/src",
-  "tags": ["type:app", "scope:angular"],
+  "tags": [
+    "type:app",
+    "scope:operations",
+    "framework:angular"
+  ],
   "targets": {
     "build": {
+      "executor": "@angular-architects/native-federation:build",
+      "defaultConfiguration": "production",
+      "options": {
+        "cacheExternalArtifacts": true,
+        "tsConfig": "apps/operations/tsconfig.federation.json"
+      },
+      "configurations": {
+        "production": {
+          "target": "operations:esbuild:production"
+        },
+        "development": {
+          "target": "operations:esbuild:development",
+          "dev": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": {
+        "target": "operations:serve-original:development",
+        "tsConfig": "apps/operations/tsconfig.federation.json",
+        "rebuildDelay": 500,
+        "cacheExternalArtifacts": true,
+        "dev": true,
+        "devServer": true,
+        "port": 0
+      }
+    },
+    "test": {
+      "executor": "@angular/build:unit-test",
+      "options": {
+        "watch": false
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "readyWhen": {
+        "signal": true
+      },
+      "dependsOn": [
+        "build"
+      ],
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "operations:build",
+        "port": 4201,
+        "staticFilePath": "dist/apps/operations/browser",
+        "spa": true
+      }
+    },
+    "esbuild": {
       "executor": "@angular/build:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/operations",
@@ -20,7 +80,13 @@
             "input": "apps/operations/public"
           }
         ],
-        "styles": ["apps/operations/src/styles.css"]
+        "styles": [
+          "libs/shared/design-tokens/src/tokens.css",
+          "apps/operations/src/styles.css"
+        ],
+        "polyfills": [
+          "es-module-shims"
+        ]
       },
       "configurations": {
         "production": {
@@ -45,7 +111,7 @@
         }
       }
     },
-    "serve": {
+    "serve-original": {
       "continuous": true,
       "readyWhen": {
         "signal": true
@@ -53,35 +119,16 @@
       "executor": "@angular/build:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "port": 4201
+        "port": 4201,
+        "proxyConfig": "apps/operations/proxy.conf.json"
       },
       "configurations": {
         "production": {
-          "buildTarget": "operations:build:production"
+          "buildTarget": "operations:esbuild:production"
         },
         "development": {
-          "buildTarget": "operations:build:development"
+          "buildTarget": "operations:esbuild:development"
         }
-      }
-    },
-    "test": {
-      "executor": "@angular/build:unit-test",
-      "options": {
-        "watch": false
-      }
-    },
-    "serve-static": {
-      "continuous": true,
-      "readyWhen": {
-        "signal": true
-      },
-      "dependsOn": ["build"],
-      "executor": "@nx/web:file-server",
-      "options": {
-        "buildTarget": "operations:build",
-        "port": 4201,
-        "staticFilePath": "dist/apps/operations/browser",
-        "spa": true
       }
     }
   }

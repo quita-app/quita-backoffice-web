@@ -29,15 +29,15 @@ Os repos do Quita ficam lado a lado na mesma pasta. A documentação é do `quit
 
 Nx · Angular (standalone, zoneless, signals) · Native Federation · NgRx SignalStore · RxJS · Reactive Forms · React + TypeScript + Vite · TanStack Query · Tailwind · Vitest + Testing Library + MSW · Playwright.
 
-Versões fixadas: <!-- preencher no walking skeleton: Nx, Angular, Native Federation, React, Vite -->
+Versões fixadas: Nx 24.0.x · Angular 22.2.x · Native Federation 22.2.x · React 19.x · Vite 8.x · TypeScript 6.0.x · Node 24
 
 ## Comandos
 
-<!-- conferir no walking skeleton com o que o Nx gerou -->
-
 | Para | Comando |
 | --- | --- |
-| Servir o shell com os remotes | `npx nx serve shell` (+ `npx nx serve operations`, `npx nx serve analytics`) |
+| Subir tudo de uma vez (shell, operations e analytics) | `npm run dev` (a API sobe à parte, no `quita-backend-api`) |
+| Servir o shell com os remotes, um por um | `npx nx serve shell` + `npx nx serve operations` + `npx nx build analytics && npx nx preview analytics` (o shell carrega o Analytics de `localhost:4302`) |
+| Servir só o Analytics (página isolada) | `npx nx serve analytics` (porta 4202) |
 | Testes de um projeto | `npx nx test <project>` |
 | Lint (inclui as fronteiras entre libs) | `npx nx lint <project>` |
 | Build de um app | `npx nx build <project>` |
@@ -53,24 +53,31 @@ A API local precisa estar rodando (`../quita-backend-api`); o servidor de desenv
 ```
 apps/      shell · operations · analytics · shell-e2e
 libs/
-  shared/     api-types · design-tokens · util          (TypeScript puro, sem framework)
-  angular/    ui · data-access · session · realtime
-  operations/ feature-queue · feature-imports · feature-policies · feature-payments · feature-admin
-  react/      ui
+  shared/         api-types · design-tokens · util          (TypeScript puro, usado por todos)
+    angular/      ui · data-access · session · realtime     (shell e Operações; singleton na federação)
+  operations/     feature-queue · feature-imports · feature-policies · feature-payments · feature-admin · data-access
+  analytics/      feature-dashboard · ui
 ```
 
-**Fronteiras** (tags do Nx, verificadas no lint):
+**Onde entra código novo:** a primeira pasta de `libs/` é o domínio. Só um app usa? `libs/<app>/`. Dois ou mais? `libs/shared/` (em `shared/angular/` se for Angular). Apps são finos: entrada, configuração e composição. Projeto = caminho com hífens (`operations-feature-queue`); apelido = `@quita/<projeto>`.
+
+**Fronteiras** (tags do Nx, verificadas no lint; o import precisa passar nas três):
 
 | Tag | Pode depender de |
 | --- | --- |
-| `type:app` | qualquer lib |
+| `type:app` | `type:feature`, `type:ui`, `type:data-access`, `type:util` |
 | `type:feature` | `type:ui`, `type:data-access`, `type:util` |
 | `type:data-access`, `type:ui` | `type:util` |
-| `type:util` | nada |
-| `scope:angular` | `scope:angular`, `scope:shared` |
-| `scope:react` | `scope:react`, `scope:shared` |
+| `type:util`, `type:e2e` | nada |
+| `scope:shell` | `scope:shared` |
+| `scope:operations` | `scope:operations`, `scope:shared` |
+| `scope:analytics` | `scope:analytics`, `scope:shared` |
+| `scope:shared` | `scope:shared` |
+| `framework:angular` | `framework:angular`, `framework:none` |
+| `framework:react` | `framework:react`, `framework:none` |
+| `framework:none` | `framework:none` |
 
-Todo projeto novo recebe as duas tags (`type:*` e `scope:*`). Uma lib Angular nunca é importada pelo React, e vice-versa.
+Todo projeto novo recebe as três tags (`type:*`, `scope:*`, `framework:*`). Uma lib Angular nunca é importada pelo React, e vice-versa.
 
 ## Convenções
 

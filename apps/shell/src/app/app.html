@@ -1,2 +1,10 @@
-<quita-nx-welcome></quita-nx-welcome>
-<router-outlet></router-outlet>
+<header class="bar">
+  <h1>Quita</h1>
+  <nav aria-label="Seções">
+    <a routerLink="/operations" routerLinkActive="active" ariaCurrentWhenActive="page">Operações</a>
+    <a routerLink="/analytics" routerLinkActive="active" ariaCurrentWhenActive="page">Painel</a>
+  </nav>
+</header>
+<main>
+  <router-outlet />
+</main>

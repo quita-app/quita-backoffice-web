@@ -1,0 +1,10 @@
+{
+  "name": "operations-data-access",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/operations/data-access/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["type:data-access", "scope:operations", "framework:angular"],
+  "// targets": "to see all targets run: nx show project operations-data-access --web",
+  "targets": {}
+}

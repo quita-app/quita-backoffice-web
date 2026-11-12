@@ -1,0 +1,9 @@
+{
+  "name": "analytics-feature-dashboard",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/analytics/feature-dashboard/src",
+  "projectType": "library",
+  "tags": ["type:feature", "scope:analytics", "framework:react"],
+  "// targets": "to see all targets run: nx show project analytics-feature-dashboard --web",
+  "targets": {}
+}

@@ -1,0 +1,9 @@
+{
+  "name": "analytics-ui",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/analytics/ui/src",
+  "projectType": "library",
+  "tags": ["type:ui", "scope:analytics", "framework:react"],
+  "// targets": "to see all targets run: nx show project analytics-ui --web",
+  "targets": {}
+}

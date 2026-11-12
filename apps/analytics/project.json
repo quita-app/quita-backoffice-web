@@ -3,7 +3,8 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/analytics/src",
   "projectType": "application",
-  "tags": ["type:app", "scope:react"],
+  "implicitDependencies": ["shared-design-tokens"],
+  "tags": ["type:app", "scope:analytics", "framework:react"],
   "// targets": "to see all targets run: nx show project analytics --web",
   "targets": {}
 }

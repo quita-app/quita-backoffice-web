@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+/* Design tokens first: @import must come before any other rule. */
+@import '../../../libs/shared/design-tokens/src/tokens.css';
+
+h1 {
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.demo-card {
+  max-width: 420px;
+  margin: 48px auto;
+  padding: 24px;
+  background: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+}
+
+.demo-card p {
+  color: var(--muted-foreground);
+}
+
+.demo-card button {
+  padding: 10px 20px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: 0;
+  border-radius: var(--radius-pill);
+  font: inherit;
+  cursor: pointer;
+}

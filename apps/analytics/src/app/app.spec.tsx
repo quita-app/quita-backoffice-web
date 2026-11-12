@@ -8,8 +8,8 @@ describe('App', () => {
     expect(baseElement).toBeTruthy();
   });
 
-  it('should have a greeting as the title', () => {
+  it('should render the page title', () => {
     const { getAllByText } = render(<App />);
-    expect(getAllByText(new RegExp('Welcome analytics', 'gi')).length > 0).toBeTruthy();
+    expect(getAllByText(new RegExp('Analytics', 'gi')).length > 0).toBeTruthy();
   });
 });
