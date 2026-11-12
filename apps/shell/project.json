@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "quita",
   "sourceRoot": "apps/shell/src",
-  "tags": ["type:app", "scope:angular"],
+  "tags": ["type:app", "scope:shell", "framework:angular"],
   "targets": {
     "build": {
       "executor": "@angular/build:application",
