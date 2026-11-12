@@ -54,3 +54,7 @@ CLAUDE.local.md
 .env
 .env.*
 !.env.example
+
+.angular
+
+__screenshots__/
