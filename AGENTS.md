@@ -29,15 +29,14 @@ Os repos do Quita ficam lado a lado na mesma pasta. A documentação é do `quit
 
 Nx · Angular (standalone, zoneless, signals) · Native Federation · NgRx SignalStore · RxJS · Reactive Forms · React + TypeScript + Vite · TanStack Query · Tailwind · Vitest + Testing Library + MSW · Playwright.
 
-Versões fixadas: <!-- preencher no walking skeleton: Nx, Angular, Native Federation, React, Vite -->
+Versões fixadas: Nx 24.0.x · Angular 22.2.x · Native Federation 22.2.x · React 19.x · Vite 8.x · TypeScript 6.0.x · Node 24
 
 ## Comandos
 
-<!-- conferir no walking skeleton com o que o Nx gerou -->
-
 | Para | Comando |
 | --- | --- |
-| Servir o shell com os remotes | `npx nx serve shell` (+ `npx nx serve operations`, `npx nx serve analytics`) |
+| Servir o shell com os remotes | `npx nx serve shell` + `npx nx serve operations` + `npx nx build analytics && npx nx preview analytics` (o shell carrega o Analytics de `localhost:4302`) |
+| Servir só o Analytics (página isolada) | `npx nx serve analytics` (porta 4202) |
 | Testes de um projeto | `npx nx test <project>` |
 | Lint (inclui as fronteiras entre libs) | `npx nx lint <project>` |
 | Build de um app | `npx nx build <project>` |
