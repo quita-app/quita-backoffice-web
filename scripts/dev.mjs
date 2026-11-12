@@ -1,9 +1,12 @@
 // Starts the shell, the operations remote and the analytics web component together,
 // and prints every local URL only once they are really answering.
 import { spawn } from 'node:child_process';
+import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const READY_TIMEOUT_MS = 3 * 60 * 1000;
-const POLL_INTERVAL_MS = 1500;
+const POLL_INTERVAL_MS = 1000;
 
 // What must answer before we say "ready". The shell is the one you open.
 const SERVICES = [
@@ -18,18 +21,29 @@ const SERVICES = [
     url: 'http://localhost:4302',
     probe: 'http://localhost:4302/quita-analytics.js',
   },
-  { label: 'Analytics (página isolada)', url: 'http://localhost:4202', probe: 'http://localhost:4202' },
 ];
 
 // Informational only: the API lives in another repo and is started separately.
 const API = { label: 'API', url: 'http://localhost:8080', probe: 'http://localhost:8080/actuator/health' };
 
-const nx = spawn(
-  'npx',
-  ['nx', 'run-many', '-t', 'serve', 'preview', '-p', 'shell', 'operations', 'analytics', '--parallel=5'],
-  { stdio: 'inherit', shell: true },
-);
-nx.on('exit', (code) => process.exit(code ?? 0));
+// Run Nx through node directly: no shell, so no escaping warning (DEP0190) and no .cmd lookup.
+const root = fileURLToPath(new URL('..', import.meta.url));
+const nxPackage = createRequire(import.meta.url)('nx/package.json');
+const nxBin = join(dirname(createRequire(import.meta.url).resolve('nx/package.json')), nxPackage.bin.nx);
+const runNx = (args) => spawn(process.execPath, [nxBin, ...args], { stdio: 'inherit', cwd: root });
+
+// Two Nx processes start in parallel: the Angular dev servers, and the analytics preview
+// (which builds the web component first; Nx caches that build for the next run).
+const children = [
+  runNx(['run-many', '-t', 'serve', '-p', 'shell', 'operations']),
+  runNx(['run', 'analytics:preview']),
+];
+for (const child of children) {
+  child.on('exit', (code) => {
+    children.forEach((other) => other.kill());
+    process.exit(code ?? 0);
+  });
+}
 
 const isUp = async ({ probe }) => {
   try {
