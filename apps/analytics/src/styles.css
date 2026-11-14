@@ -29,3 +29,7 @@ h1 {
   font: inherit;
   cursor: pointer;
 }
+
+body {
+  margin: 0; /* tokens.css styles html, not body */
+}

@@ -1,0 +1,119 @@
+/*
+ * Quita · tema do Tailwind 4. Importe DEPOIS do tailwindcss:
+ *   @import "tailwindcss";
+ *   @import "./tokens.css";
+ *   @import "./tailwind.css";
+ * Gera utilitários: bg-primary, text-muted-foreground, bg-signature, bg-aging-3, rounded-card,
+ * shadow-float, text-h1, font-mono, animate-q-pop, ease-q-out etc.
+ * Dark: classe .dark no <html> (variant abaixo).
+ */
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-signature: var(--signature);
+  --color-signature-foreground: var(--signature-foreground);
+  --color-celebrate: var(--celebrate);
+  --color-celebrate-foreground: var(--celebrate-foreground);
+  --color-aging-1: var(--aging-1);
+  --color-aging-2: var(--aging-2);
+  --color-aging-3: var(--aging-3);
+  --color-aging-4: var(--aging-4);
+  --color-aging-5: var(--aging-5);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-scrim: var(--scrim);
+
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-inner: 10px;
+  --radius-field: 14px;
+  --radius-card: 24px;
+  --radius-container: 36px;
+  --radius-pill: 9999px;
+  /* nomes do shadcn */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-xl: 36px;
+
+  --shadow-float: var(--elevation-float);
+  --shadow-raised: var(--elevation-raised);
+
+  --text-display: 64px;
+  --text-display--line-height: 68px;
+  --text-display--letter-spacing: -0.04em;
+  --text-display--font-weight: 600;
+  --text-h1: 40px;
+  --text-h1--line-height: 44px;
+  --text-h1--letter-spacing: -0.035em;
+  --text-h1--font-weight: 600;
+  --text-h2: 30px;
+  --text-h2--line-height: 36px;
+  --text-h2--letter-spacing: -0.03em;
+  --text-h2--font-weight: 600;
+  --text-h3: 22px;
+  --text-h3--line-height: 28px;
+  --text-h3--letter-spacing: -0.02em;
+  --text-h3--font-weight: 600;
+  --text-h4: 18px;
+  --text-h4--line-height: 24px;
+  --text-h4--letter-spacing: -0.01em;
+  --text-h4--font-weight: 600;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body: 16px;
+  --text-body--line-height: 24px;
+  --text-small: 14px;
+  --text-small--line-height: 20px;
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-caption--letter-spacing: 0.01em;
+  --text-caption--font-weight: 500;
+  --text-money: 56px;
+  --text-money--line-height: 60px;
+  --text-money--letter-spacing: -0.04em;
+  --text-money--font-weight: 300;
+  --text-kpi: 48px;
+  --text-kpi--line-height: 52px;
+  --text-kpi--letter-spacing: -0.04em;
+  --text-kpi--font-weight: 300;
+
+  --ease-q-out: var(--ease-out);
+
+  --animate-q-pop: q-pop .7s var(--ease-out) both;
+  --animate-q-draw: q-draw .5s .28s var(--ease-out) forwards;
+  --animate-q-rise: q-rise .5s .45s var(--ease-out) both;
+  --animate-q-spin: q-spin .8s linear infinite;
+  --animate-q-shimmer: q-shimmer 1.6s linear infinite;
+  --animate-q-breathe: q-breathe 2.4s var(--ease-out) infinite;
+  --animate-q-slide: q-slide 1.8s var(--ease-out) infinite;
+  --animate-q-caret: q-caret 1s steps(1) infinite;
+  --animate-q-fade: q-fade .2s linear both;
+}

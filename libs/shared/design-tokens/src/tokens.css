@@ -1,105 +1,179 @@
 /*
- * Quita design tokens: the single source for Angular, React and Next.js.
- * Values and names come from quita-docs/design/DESIGN.md (shadcn/Spartan naming).
- * Light theme on :root, dark theme on .dark (dark mode itself ships later).
- * Custom properties inherit through Shadow DOM, which is how they reach <quita-analytics>.
+ * Quita · Céu · tokens (fonte única para portal, shell, operations e analytics)
+ * Origem: quita-docs/design/tokens/tokens.css, extraído do protótipo aprovado (canvas Claude Design).
+ * Nomes no padrão shadcn/Spartan. Claro em :root; escuro em .dark ou [data-theme="dark"].
+ * Custom properties atravessam o Shadow DOM (chegam ao <quita-analytics>).
+ * White-label (portal): a credora só troca --signature e --signature-foreground (contraste AA validado no B13).
  */
 :root {
-  /* Base surfaces and text */
-  --background: #dce7f5; /* the "field": light blue behind the cards */
-  --foreground: #13203a; /* "ink": text and main actions */
-  --card: #ffffff;
-  --card-foreground: #13203a;
-  --popover: #ffffff;
-  --popover-foreground: #13203a;
-  --primary: #13203a;
-  --primary-foreground: #ffffff;
-  --secondary: #e8f0ff;
-  --secondary-foreground: #13203a;
-  --muted: #e9f0f9;
+  /* superfícies e texto */
+  --background: #DCE7F5;
+  --foreground: #13203A;
+  --card: #FFFFFF;
+  --card-foreground: #13203A;
+  --popover: #FFFFFF;
+  --popover-foreground: #13203A;
+  --primary: #13203A;
+  --primary-foreground: #FFFFFF;
+  --secondary: #E8F0FF;
+  --secondary-foreground: #13203A;
+  --muted: #E9F0F9;
   --muted-foreground: #576478;
-  --accent: #e8f0ff;
-  --accent-foreground: #13203a;
-  --border: #dce3ee;
-  --input: #707d8f;
-  --ring: #4b72c0;
-  --destructive: #ab413e;
-  --destructive-foreground: #ffffff;
+  --accent: #E8F0FF;
+  --accent-foreground: #13203A;
+  --border: #DCE3EE;
+  --input: #707D8F;
+  --ring: #4B72C0;
 
-  /* Quita-specific */
-  --success: #186e4e;
-  --warning: #9d621e;
-  --info: #4b72c0;
-  --signature: #8db0f7; /* one per screen, surface only (never text on white) */
-  --signature-foreground: #13203a;
-  --celebrate: #91e6be; /* mint: only for settled debts and closed agreements */
-  --celebrate-foreground: #13203a;
-  --aging-1: #a5bfec; /* up to 30 days */
-  --aging-2: #8aa5d6; /* 31 to 90 */
-  --aging-3: #6f8cc1; /* 91 to 180 */
-  --aging-4: #5371a9; /* 181 to 360 */
-  --aging-5: #34538f; /* over 360 */
-  --chart-1: #13203a;
-  --chart-2: #4b72c0;
-  --chart-3: #258b64;
-  --chart-4: #be7c1c;
-  --chart-5: #7b8799;
+  /* estados */
+  --destructive: #AB413E;
+  --destructive-foreground: #FFFFFF;
+  --success: #186E4E;
+  --success-foreground: #FFFFFF;
+  --warning: #9D621E;
+  --info: #4B72C0;
 
-  /* Typography */
-  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  /* marca */
+  --signature: #8DB0F7;            /* uma vez por tela; superfície, nunca texto sobre branco */
+  --signature-foreground: #13203A;
+  --celebrate: #91E6BE;            /* menta: só quitado e acordo fechado */
+  --celebrate-foreground: #13203A;
 
-  /* Radii: containers are rounder than what they contain */
-  --radius-pill: 9999px;
-  --radius-container: 36px;
-  --radius-card: 24px;
-  --radius-field: 14px;
+  /* faixas de atraso (1 a 5, na ordem das faixas da Política) */
+  --aging-1: #A5BFEC;
+  --aging-2: #8AA5D6;
+  --aging-3: #6F8CC1;
+  --aging-4: #5371A9;
+  --aging-5: #34538F;
+
+  /* gráficos */
+  --chart-1: #13203A;
+  --chart-2: #4B72C0;
+  --chart-3: #258B64;
+  --chart-4: #BE7C1C;
+  --chart-5: #7B8799;
+
+  /* sobreposições e sombras */
+  --scrim: rgba(12, 22, 38, .42);
+  --elevation-float: 0 16px 40px -12px rgba(19, 32, 58, .28), 0 2px 6px rgba(19, 32, 58, .08);
+  --elevation-raised: 0 1px 2px rgba(19, 32, 58, .08);             /* aba ativa, segmento ativo */
+  --elevation-thumb: 0 0 0 1.5px var(--border), 0 4px 10px -2px rgba(19, 32, 58, .3); /* controle do simulador */
+  --demo-stripe-a: #FFF6E5;        /* faixa "ambiente de demonstração": listras a 135°, 12px */
+  --demo-stripe-b: #FFEFD2;
+  --demo-stripe-foreground: #5A3A0C; /* igual nos dois temas */
+
+  /* raios */
   --radius-inner: 10px;
+  --radius-field: 14px;
+  --radius-card: 24px;
+  --radius-container: 36px;
+  --radius-pill: 9999px;
+  --radius: var(--radius-field);   /* base do shadcn/Spartan */
+
+  /* espaço (base 4) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* tipografia: Geist (sans) e Geist Mono */
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --text-display: 64px;   --text-display-lh: 68px; --text-display-tr: -0.04em;  --text-display-w: 600;
+  --text-h1: 40px;        --text-h1-lh: 44px;      --text-h1-tr: -0.035em;      --text-h1-w: 600;
+  --text-h2: 30px;        --text-h2-lh: 36px;      --text-h2-tr: -0.03em;       --text-h2-w: 600;
+  --text-h3: 22px;        --text-h3-lh: 28px;      --text-h3-tr: -0.02em;       --text-h3-w: 600;
+  --text-h4: 18px;        --text-h4-lh: 24px;      --text-h4-tr: -0.01em;       --text-h4-w: 600;
+  --text-body-lg: 18px;   --text-body-lg-lh: 28px;
+  --text-body: 16px;      --text-body-lh: 24px;
+  --text-small: 14px;     --text-small-lh: 20px;
+  --text-caption: 12px;   --text-caption-lh: 16px; --text-caption-tr: 0.01em;   --text-caption-w: 500;
+  --text-money: 56px;     --text-money-lh: 60px;   --text-money-tr: -0.04em;    --text-money-w: 300;  /* valor em destaque; centavos a 0.56em */
+  --text-kpi: 48px;       --text-kpi-lh: 52px;     --text-kpi-tr: -0.04em;      --text-kpi-w: 300;
+  --text-money-table: 14px; --text-money-table-lh: 20px; --text-money-table-w: 500;
+
+  /* movimento */
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --dur-fast: 120ms;
+  --dur: 200ms;
+  --dur-panel: 320ms;
+
+  /* moldura do backoffice */
+  --rail-width: 232px;
+  --rail-width-collapsed: 76px;
+  --topbar-height: 68px;
+  --sheet-width: 420px;
+
+  color-scheme: light;
 }
 
-.dark {
-  --background: #0f1a2c;
-  --foreground: #eef3fa;
-  --card: #17233a;
-  --card-foreground: #eef3fa;
-  --popover: #1e2c46;
-  --popover-foreground: #eef3fa;
-  --primary: #eef3fa;
-  --primary-foreground: #13203a;
-  --secondary: #22345a;
-  --secondary-foreground: #eef3fa;
-  --muted: #1a2740;
-  --muted-foreground: #9aa8bd;
-  --accent: #22345a;
-  --accent-foreground: #eef3fa;
-  --border: #26354f;
+.dark, [data-theme="dark"] {
+  --background: #0F1A2C;
+  --foreground: #EEF3FA;
+  --card: #17233A;
+  --card-foreground: #EEF3FA;
+  --popover: #1E2C46;
+  --popover-foreground: #EEF3FA;
+  --primary: #EEF3FA;
+  --primary-foreground: #13203A;
+  --secondary: #22345A;
+  --secondary-foreground: #EEF3FA;
+  --muted: #1A2740;
+  --muted-foreground: #9AA8BD;
+  --accent: #22345A;
+  --accent-foreground: #EEF3FA;
+  --border: #26354F;
   --input: #647289;
-  --ring: #8db0f7;
-  --destructive: #eb827b;
-  --destructive-foreground: #13203a;
-  --success: #65cfa1;
-  --warning: #eab26b;
-  --info: #afcbff;
-  --signature: #8db0f7;
-  --signature-foreground: #13203a;
-  --celebrate: #7cdbb0;
-  --celebrate-foreground: #13203a;
+  --ring: #8DB0F7;
+  --destructive: #EB827B;
+  --destructive-foreground: #13203A;
+  --success: #65CFA1;
+  --success-foreground: #13203A;
+  --warning: #EAB26B;
+  --info: #AFCBFF;
+  --signature: #8DB0F7;
+  --signature-foreground: #13203A;
+  --celebrate: #7CDBB0;
+  --celebrate-foreground: #13203A;
   --aging-1: #506386;
-  --aging-2: #647ba3;
-  --aging-3: #7b96c5;
-  --aging-4: #93b2e8;
-  --aging-5: #acceff;
-  --chart-1: #eef3fa;
-  --chart-2: #8db0f7;
-  --chart-3: #65cfa1;
-  --chart-4: #edb161;
-  --chart-5: #a7b2c2;
+  --aging-2: #647BA3;
+  --aging-3: #7B96C5;
+  --aging-4: #93B2E8;
+  --aging-5: #ACCEFF;
+  --chart-1: #EEF3FA;
+  --chart-2: #8DB0F7;
+  --chart-3: #65CFA1;
+  --chart-4: #EDB161;
+  --chart-5: #A7B2C2;
+  --scrim: rgba(3, 8, 18, .6);
+  --elevation-float: 0 16px 40px -12px rgba(0, 0, 0, .6), 0 2px 6px rgba(0, 0, 0, .3);
+  --elevation-raised: 0 1px 2px rgba(0, 0, 0, .4);
+  --elevation-thumb: 0 0 0 1.5px var(--border), 0 4px 10px -2px rgba(0, 0, 0, .5);
+  color-scheme: dark;
 }
 
-/* Base: every app starts on the field, in Geist, with tabular numbers */
-body {
-  margin: 0;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  font-variant-numeric: tabular-nums;
+/* base */
+*, *::before, *::after { box-sizing: border-box; }
+html { font-family: var(--font-sans); color: var(--foreground); background: var(--background); -webkit-font-smoothing: antialiased; }
+::selection { background: var(--signature); color: var(--signature-foreground); }
+:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; }
+
+/* animações do sistema */
+@keyframes q-pop { from { transform: scale(.55); filter: blur(8px); opacity: 0 } to { transform: none; filter: none; opacity: 1 } }  /* disco do acordo fechado, 700ms */
+@keyframes q-draw { to { stroke-dashoffset: 0 } }                                   /* check desenhado, 500ms após 280ms */
+@keyframes q-rise { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none } } /* título, 500ms após 450ms */
+@keyframes q-spin { to { transform: rotate(360deg) } }                               /* botão carregando, 800ms */
+@keyframes q-shimmer { from { background-position: 200% 0 } to { background-position: -200% 0 } } /* esqueleto, 1.6s */
+@keyframes q-breathe { 0%, 100% { transform: scale(.8); opacity: .6 } 50% { transform: scale(1.15); opacity: 1 } } /* "acordando o servidor", 2.4s */
+@keyframes q-slide { from { left: -35% } to { left: 100% } }                         /* barra indeterminada, 1.8s */
+@keyframes q-caret { 50% { opacity: 0 } }                                            /* cursor da célula do código, 1s */
+@keyframes q-fade { from { opacity: 0 } to { opacity: 1 } }                          /* substituto em movimento reduzido */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
