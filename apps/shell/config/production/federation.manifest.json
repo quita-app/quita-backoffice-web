@@ -1,0 +1,4 @@
+{
+  "operations": "https://quita-operations.vercel.app/remoteEntry.json",
+  "analytics": "https://quita-analytics.vercel.app/quita-analytics.js"
+}
