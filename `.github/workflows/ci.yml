@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  pull_request: # todo PR para qualquer branch
+  push:
+    branches: [main] # e cada merge na main (atualiza a base do affected)
+
+# Um PR novo cancela a execução anterior do mesmo PR: ninguém espera CI de commit velho
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  affected:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # histórico completo: o affected compara commits
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24 # o mesmo Node da sua máquina (guia 04, Parte 0)
+          cache: npm # reaproveita o cache do npm entre execuções
+
+      - run: npm ci # instala EXATAMENTE o package-lock.json (nunca "npm install" no CI)
+
+      - uses: nrwl/nx-set-shas@v5 # define NX_BASE e NX_HEAD
+
+      - run: npx nx affected -t lint test build # só os projetos alcançados pela mudança
