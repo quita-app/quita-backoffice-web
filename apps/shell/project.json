@@ -90,6 +90,17 @@
       },
       "configurations": {
         "production": {
+          "assets": [
+            {
+              "glob": "**/*",
+              "input": "apps/shell/public",
+              "ignore": ["federation.manifest.json", "app-config.json"]
+            },
+            {
+              "glob": "*.json",
+              "input": "apps/shell/config/production"
+            }
+          ],
           "budgets": [
             {
               "type": "initial",
